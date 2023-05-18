@@ -2,7 +2,6 @@ const EditIcon = () => {
   const style = {
     fill: "none",
     stroke: "#475569",
-    "stroke-miterlimit": "10",
   };
   return (
     <svg

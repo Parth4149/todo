@@ -87,7 +87,6 @@
   max-height: 12rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 0.5rem;
 }
 
 .todo__container .settings {

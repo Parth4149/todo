@@ -2,7 +2,6 @@ const BarsIcon = () => {
   const style = {
     fill: "#64748b",
     stroke: "#475569",
-    "stroke-miterlimit": "10",
   };
   return (
     <svg
