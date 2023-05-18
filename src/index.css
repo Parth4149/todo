@@ -60,3 +60,11 @@ body {
   background: var(--grey-100);
   color: var(--grey-700);
 }
+
+ul,
+li {
+  padding: 0;
+}
+li {
+  list-style-type: none;
+}

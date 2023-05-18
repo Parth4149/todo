@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import Todo from "./ui/Todo";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
-  const [addTodo, setAddTodo] = useState(false);
+  // const [addTodo, setAddTodo] = useState(false);
 
   function fetchTodoList() {
     fetch("https://jsonplaceholder.typicode.com/posts")
@@ -50,7 +51,6 @@ const TodoList = () => {
   console.log("todos", todos);
   return (
     <section className="todolist__section">
-    
       <div className="add__todo-container">
         <button className="add__todo-btn">Add Todo</button>
         <form className="todo-form" onSubmit={(e) => e.preventDefault()}>
@@ -64,10 +64,11 @@ const TodoList = () => {
         <button onClick={() => createTodo()}>Add</button>
         <button onClick={() => updateTodo(1)}>Update</button>
       </div>
-
-      {todos?.map((todo) => (
-        <div key={todo.id}> {todo.title} </div>
-      ))}
+      <ul className="todolist">
+        {todos?.map((todo) => (
+          <Todo todo={todo} key={todo.id} />
+        ))}
+      </ul>
     </section>
   );
 };
