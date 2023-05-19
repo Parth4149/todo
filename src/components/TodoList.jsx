@@ -3,11 +3,10 @@ import Todo from "./ui/Todo";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
-  // const [addTodo, setAddTodo] = useState(false);
 
   const fetchTodoList = async () => {
     try {
-      fetch("https://jsonplaceholder.typicode.com/posts")
+      fetch("https://jsonplaceholder.typicode.com/todos")
         .then((response) => response.json())
         .then((json) => setTodos(json));
     } catch (e) {
@@ -17,13 +16,12 @@ const TodoList = () => {
 
   const createTodo = async ({ id, userId, title, body }) => {
     console.log(id, userId, title, body);
-    fetch("https://jsonplaceholder.typicode.com/posts", {
+    fetch("https://jsonplaceholder.typicode.com/todos", {
       method: "POST",
       body: JSON.stringify({
-        title,
-        body,
-        userId,
         id,
+        userId,
+        title,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -33,16 +31,14 @@ const TodoList = () => {
       .then((json) => setTodos((prev) => [...prev, json]));
   };
 
-  const updateTodo = async () => {
+  const updateTodo = async ({ id, userId, title }) => {
     console.log("updateTodo");
-    const id = 101;
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
       method: "PUT",
       body: JSON.stringify({
         id,
-        title: "foo1",
-        body: "bar1",
-        userId: 11,
+        userId,
+        title,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -58,10 +54,20 @@ const TodoList = () => {
       });
   };
 
+  const deleteTodo = async (id) => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      method: "DELETE",
+    }).catch(() =>
+      console.ward(
+        "Important: resource will not be really updated on the server but it will be faked as if."
+      )
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log(formData.get("title"), formData.get("body"));
+    console.log(formData.get("title"), formData.get("completed"));
     console.log(todos.length);
     const obj = {
       id: todos.length + 1,
@@ -76,25 +82,27 @@ const TodoList = () => {
     fetchTodoList();
   }, []);
 
-  console.log("todos", todos);
   return (
     <section className="todolist__section">
       <div className="add__todo-container">
         <button className="add__todo-btn">Add Todo</button>
         <form className="todo-form" onSubmit={handleSubmit}>
           <input id="title" name="title" type="text" placeholder="Title" />
-          <input id="body" name="body" type="text" placeholder="Note" />
+          {/* <input id="body" name="body" type="text" placeholder="Note" /> */}
           <button type="submit">Add</button>
         </form>
       </div>
 
-      <div>
-        <button onClick={() => createTodo()}>Add</button>
-        <button onClick={() => updateTodo()}>Update</button>
-      </div>
+      <div></div>
+
       <ul className="todolist">
         {todos?.map((todo) => (
-          <Todo todo={todo} key={todo.id} />
+          <Todo
+            todo={todo}
+            key={todo.id}
+            updateTodo={updateTodo}
+            deleteTodo={deleteTodo}
+          />
         ))}
       </ul>
     </section>

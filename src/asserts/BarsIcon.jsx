@@ -11,11 +11,11 @@ const BarsIcon = () => {
       strokeWidth="1.5"
       color="#000"
       data-name="Layer 1"
-      viewBox="0 0 24 24"  
+      viewBox="0 0 24 24"
     >
-      <circle cx="3.41" cy="12" r="1.91" style={style}></circle>
+      <circle cx="12" cy="3.41" r="1.91" style={style}></circle>
       <circle cx="12" cy="12" r="1.91" style={style}></circle>
-      <circle cx="20.59" cy="12" r="1.91" style={style}></circle>
+      <circle cx="12" cy="20.59" r="1.91" style={style}></circle>
     </svg>
   );
 };
