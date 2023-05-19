@@ -1,9 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import Todo from "./ui/Todo";
+import { filterTodo } from "../utils";
 
 const TodoList = () => {
   const [data, setData] = useState([]);
   const [todos, setTodos] = useState([]);
+  const inputRef = useRef(null);
 
   function fetchTodoList() {
     try {
@@ -18,14 +20,15 @@ const TodoList = () => {
     }
   }
 
-  const createTodo = async ({ id, userId, title, body }) => {
-    console.log(id, userId, title, body);
+  const createTodo = async ({ id, userId, title, completed }) => {
+    console.log(id, userId, title);
     fetch("https://jsonplaceholder.typicode.com/todos", {
       method: "POST",
       body: JSON.stringify({
         id,
         userId,
         title,
+        completed,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -33,6 +36,7 @@ const TodoList = () => {
     })
       .then((response) => response.json())
       .then((json) => setTodos((prev) => [...prev, json]));
+    inputRef.current.value = "";
   };
 
   const updateTodo = async ({ id, userId, title }) => {
@@ -43,6 +47,7 @@ const TodoList = () => {
         id,
         userId,
         title,
+        completed: false,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -71,13 +76,11 @@ const TodoList = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log(formData.get("title"), formData.get("completed"));
-    console.log(todos.length);
     const obj = {
       id: todos.length + 1,
       userId: Math.floor((todos.length + 1) / 10) + 1,
       title: formData.get("title") ?? "",
-      body: formData.get("body") ?? "",
+      completed: false,
     };
     createTodo(obj);
   };
@@ -86,7 +89,6 @@ const TodoList = () => {
     document.querySelector("button.active")?.classList.remove("active");
     e.target.classList.add("active");
     filterTodo(e.target.id, data, setTodos);
-    console.log(e.target.id);
   };
 
   useEffect(() => {
@@ -97,9 +99,20 @@ const TodoList = () => {
   return (
     <section className="todolist__section">
       <div className="add__todo-container">
-        <button className="add__todo-btn">Add Todo</button>
+        <button
+          className="add__todo-btn"
+          onClick={() => inputRef.current.focus()}
+        >
+          Add Todo
+        </button>
         <form className="todo-form" onSubmit={handleSubmit}>
-          <input id="title" name="title" type="text" placeholder="Title" />
+          <input
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Title"
+            ref={inputRef}
+          />
           <button type="submit">Add</button>
         </form>
       </div>
@@ -131,24 +144,5 @@ const TodoList = () => {
     </section>
   );
 };
-
-function filterTodo(filter, todos, setTodos) {
-  let count = 0;
-  if (todos) {
-    const filteredData = todos.filter((todo) => {
-      let completed = todo.completed === true ? "completed" : "pending";
-      if (filter == completed || filter == "all") {
-        count++;
-        return todo;
-      }
-    });
-    setTodos(filteredData);
-  }
-  console.log(count);
-  if (count === 0) {
-    return `You don't have any task here`;
-  }
-  // let checkTask = taskBox.querySelectorAll(".todo__container");
-}
 
 export default TodoList;

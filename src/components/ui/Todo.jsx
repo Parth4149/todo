@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import BarsIcon from "../../asserts/BarsIcon";
 import EditIcon from "../../asserts/EditIcon";
 import DeleteIcon from "../../asserts/DeleteIcon";
-import Modal from "../Modal";
+import TodoModal from "../TodoModal";
 
 const Todo = ({ todo, updateTodo, deleteTodo }) => {
   const currSettingRef = useRef(null);
@@ -45,7 +45,14 @@ const Todo = ({ todo, updateTodo, deleteTodo }) => {
             <BarsIcon />
           </div>
           <ul className="task-menu" ref={currSettingRef}>
-            <li role="button" onClick={() => setShowModal(true)}>
+            <li
+              role="button"
+              onClick={() => {
+                document.getElementById("modalTitle")?.focus();
+                setShowModal(true);
+                console.log("Edit");
+              }}
+            >
               <EditIcon /> Edit
             </li>
             <li role="button" onClick={() => deleteTodo(todo.id)}>
@@ -55,40 +62,6 @@ const Todo = ({ todo, updateTodo, deleteTodo }) => {
         </button>
       </div>
     </li>
-  );
-};
-
-const TodoModal = ({ todo, setShowModal, updateTodo }) => {
-  const [title, setTitle] = useState(todo.title);
-
-  const submitHandle = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log(formData.get("title"), formData.get("body"));
-    const obj = {
-      id: todo.id,
-      userId: todo.userId,
-      title: formData.get("title") ?? todo.title,
-    };
-    updateTodo(obj);
-    setShowModal(false);
-  };
-
-  return (
-    <Modal>
-      <div>
-        <form onSubmit={submitHandle}>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </Modal>
   );
 };
 

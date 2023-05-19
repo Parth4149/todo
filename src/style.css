@@ -62,7 +62,6 @@
 .todo__container {
   width: calc(100% / 3);
   padding: 0.5rem;
-  /* max-height: 18rem; */
   overflow: hidden;
 }
 .todo__inner {
@@ -126,7 +125,6 @@
 .task-menu.show {
   transform: scale(1);
 }
-
 .task-menu li {
   height: 1.5rem;
   max-width: 8rem;
@@ -134,13 +132,22 @@
   justify-content: flex-start;
   padding: 0 0.5rem;
 }
-
 .task-menu li:last-child {
   margin-bottom: 0;
 }
 .settings li:hover {
   background: #f5f5f5;
 }
+
+@media (max-width: 480px) {
+  .todo__container {
+    width: 100%;
+  }
+  .todo-form  {
+    width: 90%;
+  }
+}
+
 
 #modal {
   background-color: rgba(51, 50, 50, 0.522);
@@ -160,9 +167,9 @@
 #modal > div {
   background-color: var(--white);
   max-width: 28rem;
-  padding: 1rem;
+  padding: 1.3rem;
   text-align: center;
-  border-radius: 30px;
+  border-radius: 24px;
   background: var(--grey-100);
   color: var(--grey-600);
   text-align: start;
@@ -175,6 +182,8 @@
   margin: 1.5rem 0 0.5rem 0;
   border-radius: 8px;
   color: var(--white);
+  max-width: 7rem;
+  text-align: center;
 }
 #modal form {
   width: 22rem;
@@ -182,15 +191,14 @@
   flex-direction: column;
 }
 #modal form input {
-  margin-bottom: 1rem;
+  border-radius: 12px;
 }
 #modal form #title {
   font-weight: 600;
   margin-top: 0.5rem;
 }
 
-#modal form textarea,
-#title {
+#modal form input {
   border: 0;
   outline: 1px solid var(--grey-400);
   padding: 0.5rem;
