@@ -28,7 +28,7 @@ const Todo = ({ todo, updateTodo, deleteTodo }) => {
             type="checkbox"
             name="completed"
             checked={checked}
-            id="completed"
+            id={todo.id}
             onChange={() => setChecked((prev) => !prev)}
           />
           <p className={`todo__title ${checked === true && "checked"}`}>

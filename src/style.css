@@ -197,3 +197,42 @@
   font-size: 1rem;
   color: var(--grey-600);
 }
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--grey-300);
+}
+.filters button {
+  all: unset;
+  margin: 0 8px;
+  font-size: 17px;
+  color: #444444;
+  cursor: pointer;
+}
+.filters button:first-child {
+  margin-left: 0;
+}
+.filters button.active {
+  color: #3c87ff;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0 10px;
+  }
+  .wrapper {
+    padding: 20px 0;
+  }
+  .filters button {
+    margin: 0 5px;
+  }
+  .task-input {
+    padding: 0 20px;
+  }
+  .controls {
+    padding: 18px 20px;
+  }
+}
