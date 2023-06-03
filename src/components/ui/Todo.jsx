@@ -1,16 +1,32 @@
 import { useRef, useState } from "react";
+import { useTodoContext } from "../../Context";
+
 import BarsIcon from "../../asserts/BarsIcon";
 import EditIcon from "../../asserts/EditIcon";
 import DeleteIcon from "../../asserts/DeleteIcon";
+
 import UpdateTodoModal from "../UpdateTodoModal";
 
-const Todo = ({ todo, updateTodo, deleteTodo }) => {
+const Todo = ({ todo }) => {
   const currSettingRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(todo.completed);
 
+  const { updateTodo, deleteTodo, todos, updateAllData } = useTodoContext();
+
   const showMenu = () => {
     currSettingRef?.current.classList.add("show");
+  };
+
+  const updateHandler = (e) => {
+    console.log(e.target.id);
+    const completed = !checked;
+    setChecked(completed);
+    const updatedTodos = todos.map((todo) =>
+      todo.id === e.target.id ? { ...todo, completed } : todo
+    );
+
+    updateAllData(updatedTodos);
   };
 
   return (
@@ -29,7 +45,7 @@ const Todo = ({ todo, updateTodo, deleteTodo }) => {
             name="completed"
             checked={checked}
             id={todo.id}
-            onChange={() => setChecked((prev) => !prev)}
+            onChange={updateHandler}
           />
           <p className={`todo__title ${checked === true && "checked"}`}>
             {todo.title}
@@ -50,7 +66,6 @@ const Todo = ({ todo, updateTodo, deleteTodo }) => {
               onClick={() => {
                 document.getElementById("modalTitle")?.focus();
                 setShowModal(true);
-                console.log("Edit");
               }}
             >
               <EditIcon /> Edit
