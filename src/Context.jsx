@@ -1,34 +1,60 @@
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { getTodosFromLocalStorage } from "./utils/index";
 
 const TodoContext = createContext(null);
 
 export const TodoProvider = ({ children }) => {
-  const [todos, setTodos] = useState(getTodosFromLocalStorage());
+  const [todos, setTodos] = useState([]);
+  const [data, setData] = useState([]);
 
-  const createTodo = async (obj) => {
-    console.log("createTodo", obj);
-    const updatedTodos = [...todos, obj];
+  const updateAllData = (updatedTodos) => {
     setTodos(updatedTodos);
+    setData(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
-  const updateTodo = async (obj) => {
-    console.log("updateTodo", obj);
+  const createTodo = (obj) => {
+    const isDuplicate = todos.some((todo) => todo.id === obj.id);
+    if (isDuplicate) {
+      console.log("You can't create a duplicate title");
+    } else {
+      const updatedTodos = [...todos, obj];
+      updateAllData(updatedTodos);
+    }
+  };
+
+  const updateTodo = (obj) => {
     const updatedTodos = todos.map((todo) =>
-      +todo.id === +obj.id ? obj : todo
+      todo.id === obj.id ? { ...obj, id: obj.title } : todo
     );
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    updateAllData(updatedTodos);
   };
 
-  const deleteTodo = async (id) => {
-    console.log("deleteTodo", id);
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    updateAllData(updatedTodos);
   };
+
+  useEffect(() => {
+    const data = getTodosFromLocalStorage();
+    setTodos(data);
+    setData(data);
+    console.log("useEffect");
+  }, []);
+  console.log("Todos", todos);
 
   return (
     <TodoContext.Provider
-      value={{ todos, setTodos, createTodo, updateTodo, deleteTodo }}
+      value={{
+        todos,
+        setTodos,
+        createTodo,
+        updateTodo,
+        deleteTodo,
+        data,
+        setData,
+        updateAllData,
+      }}
     >
       {children}
     </TodoContext.Provider>

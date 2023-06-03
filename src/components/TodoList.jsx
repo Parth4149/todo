@@ -4,16 +4,14 @@ import { filterTodo } from "../utils";
 import { useTodoContext } from "../Context";
 
 const TodoList = () => {
-  const { todos, setTodos, createTodo, updateTodo, deleteTodo } =
-    useTodoContext();
+  const { todos, setTodos, createTodo, data } = useTodoContext();
   const inputRef = useRef(null);
-  console.log("Todos", todos);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const obj = {
-      id: todos.length + 1,
+      id: formData.get("title") ?? "",
       title: formData.get("title") ?? "",
       completed: false,
     };
@@ -23,10 +21,9 @@ const TodoList = () => {
   const filterHandler = (e) => {
     document.querySelector("button.active")?.classList.remove("active");
     e.target.classList.add("active");
-    filterTodo(e.target.id, todos, setTodos);
+    filterTodo(e.target.id, data, setTodos);
   };
 
-  // console.log("data", data);
   return (
     <section className="todolist__section">
       <div className="add__todo-container">
@@ -64,12 +61,7 @@ const TodoList = () => {
 
       <ul className="todolist">
         {todos?.map((todo) => (
-          <Todo
-            todo={todo}
-            key={todo.id}
-            updateTodo={updateTodo}
-            deleteTodo={deleteTodo}
-          />
+          <Todo todo={todo} key={todo.id} />
         ))}
       </ul>
     </section>

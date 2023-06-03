@@ -7,9 +7,8 @@ const UpdateTodoModal = ({ todo, setShowModal, updateTodo }) => {
   const submitHandle = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log("TodoModal", formData.get("title"));
-
-    updateTodo({ ...todo, title: formData.get("title") ?? todo.title });
+    const title = formData.get("title") ?? todo.title;
+    updateTodo({ ...todo, title });
     setShowModal(false);
   };
 

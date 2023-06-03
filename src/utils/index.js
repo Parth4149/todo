@@ -1,3 +1,13 @@
+export const getTodosFromLocalStorage = () => {
+  let todos = localStorage.getItem("todos");
+  if (todos) {
+    todos = JSON.parse(todos);
+  } else {
+    todos = [];
+  }
+  return todos;
+};
+
 export function filterTodo(filter, todos, setTodos) {
   let count = 0;
   if (todos) {
@@ -15,13 +25,3 @@ export function filterTodo(filter, todos, setTodos) {
   }
 }
 
-export const getTodosFromLocalStorage = () => {
-  let todos = localStorage.getItem("todos");
-  if (todos) {
-    todos = JSON.parse(todos);
-  } else {
-    todos = [];
-  }
-  return todos;
-};
-console.log(getTodosFromLocalStorage());
