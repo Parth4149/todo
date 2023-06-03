@@ -14,3 +14,14 @@ export function filterTodo(filter, todos, setTodos) {
     return `You don't have any task here`;
   }
 }
+
+export const getTodosFromLocalStorage = () => {
+  let todos = localStorage.getItem("todos");
+  if (todos) {
+    todos = JSON.parse(todos);
+  } else {
+    todos = [];
+  }
+  return todos;
+};
+console.log(getTodosFromLocalStorage());
