@@ -8,59 +8,15 @@ const TodoList = () => {
   const inputRef = useRef(null);
 
   function fetchTodoList() {
-    try {
-      fetch("https://jsonplaceholder.typicode.com/todos")
-        .then((response) => response.json())
-        .then((json) => {
-          setTodos(json);
-          setData(json);
-        });
-    } catch (e) {
-      console.log(e);
-    }
+   
   }
 
-  const createTodo = async ({ id, userId, title, completed }) => {
-    console.log(id, userId, title);
-    fetch("https://jsonplaceholder.typicode.com/todos", {
-      method: "POST",
-      body: JSON.stringify({
-        id,
-        userId,
-        title,
-        completed,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => setTodos((prev) => [...prev, json]));
-    inputRef.current.value = "";
+  const createTodo = async () => {
+    
   };
 
-  const updateTodo = async ({ id, userId, title }) => {
-    console.log("updateTodo");
-    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-      method: "PUT",
-      body: JSON.stringify({
-        id,
-        userId,
-        title,
-        completed: false,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => setTodos((prev) => [...prev, json]))
-      .catch((error) => {
-        console.error(error);
-        console.warn(
-          "Important: resource will not be really updated on the server but it will be faked as if."
-        );
-      });
+  const updateTodo = async () => {
+    
   };
 
   const deleteTodo = async (id) => {
@@ -78,7 +34,6 @@ const TodoList = () => {
     const formData = new FormData(e.target);
     const obj = {
       id: todos.length + 1,
-      userId: Math.floor((todos.length + 1) / 10) + 1,
       title: formData.get("title") ?? "",
       completed: false,
     };

@@ -4,7 +4,6 @@ import Footer from "./Footer";
 import { TodoProvider } from "../Context";
 
 const App = () => {
-  console.log();
   return (
     <>
       <Navbar />
