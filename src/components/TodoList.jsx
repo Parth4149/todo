@@ -16,6 +16,7 @@ const TodoList = () => {
       completed: false,
     };
     createTodo(obj);
+    inputRef.current.value = "";
   };
 
   const filterHandler = (e) => {
