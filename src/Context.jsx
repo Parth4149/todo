@@ -13,8 +13,13 @@ export const TodoProvider = ({ children }) => {
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
-  const updateTodo = async () => {
-    console.log("updateTodo");
+  const updateTodo = async (obj) => {
+    console.log("updateTodo", obj);
+    const updatedTodos = todos.map((todo) =>
+      +todo.id === +obj.id ? obj : todo
+    );
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
   const deleteTodo = async (id) => {

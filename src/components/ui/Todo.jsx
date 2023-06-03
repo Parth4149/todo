@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import BarsIcon from "../../asserts/BarsIcon";
 import EditIcon from "../../asserts/EditIcon";
 import DeleteIcon from "../../asserts/DeleteIcon";
-import TodoModal from "../TodoModal";
+import UpdateTodoModal from "../UpdateTodoModal";
 
 const Todo = ({ todo, updateTodo, deleteTodo }) => {
   const currSettingRef = useRef(null);
@@ -16,7 +16,7 @@ const Todo = ({ todo, updateTodo, deleteTodo }) => {
   return (
     <li className="todo__container">
       {showModal && (
-        <TodoModal
+        <UpdateTodoModal
           todo={todo}
           setShowModal={setShowModal}
           updateTodo={updateTodo}
