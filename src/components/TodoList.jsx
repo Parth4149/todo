@@ -1,33 +1,13 @@
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import Todo from "./ui/Todo";
 import { filterTodo } from "../utils";
+import { useTodoContext } from "../Context";
 
 const TodoList = () => {
-  const [data, setData] = useState([]);
-  const [todos, setTodos] = useState([]);
+  const { todos, setTodos, createTodo, updateTodo, deleteTodo } =
+    useTodoContext();
   const inputRef = useRef(null);
-
-  function fetchTodoList() {
-   
-  }
-
-  const createTodo = async () => {
-    
-  };
-
-  const updateTodo = async () => {
-    
-  };
-
-  const deleteTodo = async (id) => {
-    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-      method: "DELETE",
-    }).catch(() =>
-      console.ward(
-        "Important: resource will not be really updated on the server but it will be faked as if."
-      )
-    );
-  };
+  console.log("Todos", todos);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,12 +23,8 @@ const TodoList = () => {
   const filterHandler = (e) => {
     document.querySelector("button.active")?.classList.remove("active");
     e.target.classList.add("active");
-    filterTodo(e.target.id, data, setTodos);
+    filterTodo(e.target.id, todos, setTodos);
   };
-
-  useEffect(() => {
-    fetchTodoList();
-  }, []);
 
   // console.log("data", data);
   return (
