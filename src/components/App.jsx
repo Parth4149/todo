@@ -1,11 +1,18 @@
-import Home from "./Home";
+import Navbar from "./Navbar";
+import TodoList from "./TodoList";
+import Footer from "./Footer";
+import { TodoProvider } from "../Context";
 
 const App = () => {
   console.log();
   return (
-    <main>
-      <Home />
-    </main>
+    <>
+      <Navbar />
+      <TodoProvider>
+        <TodoList />
+      </TodoProvider>
+      <Footer />
+    </>
   );
 };
 
