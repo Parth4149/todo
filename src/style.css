@@ -46,6 +46,7 @@
 }
 .todo-form input:focus {
   outline: 2px solid var(--grey-400);
+  border-radius: 5px;
 }
 .todo-form button {
   all: unset;
@@ -53,6 +54,7 @@
   background: var(--grey-300);
   padding: 0.3rem 0;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .todolist {
@@ -65,7 +67,8 @@
   overflow: hidden;
 }
 .todo__inner {
-  border: 1px solid var(--grey-400);
+  border: 0;
+  outline: 1px solid var(--grey-400);
   padding: 1rem;
   border-radius: 15px;
   width: 100%;
@@ -78,8 +81,7 @@
   display: flex;
 }
 .todo__inner:hover {
-  transition: 0.3s all;
-  box-shadow: var(--shadow-2);
+  outline: 2px solid var(--primary-500);
 }
 .todo__title {
   font-weight: 600;
